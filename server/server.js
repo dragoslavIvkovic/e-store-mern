@@ -1,6 +1,6 @@
 const express = require("express");
 const connectDB = require("./config/db");
-const { notFound, errorHanlder } = require("./middleware/errorHandler");
+const { notFound, errorHandler: errorHandler } = require("./middleware/errorHandler");
 const app = express();
 require("dotenv").config({ path: ".env" });
 const PORT = process.env.PORT || 4000;
@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true })); // middleware za parsiranje URL
 app.use("/api/user", authRouter);
 
 app.use(notFound);
-app.use(errorHanlder)
+app.use(errorHandler)
 
 app.listen(PORT, () => {
     console.log(`server is running at port:${PORT}`)

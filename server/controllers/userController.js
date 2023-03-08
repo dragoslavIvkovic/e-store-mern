@@ -10,11 +10,23 @@ const createUser = async (req, res) => {
 
       res.json(newUser);
     } else {
-      throw new Error('User already exists');
+      res.status(400).json({ message: 'User already exists' });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
-}
+};
 
-module.exports = { createUser };
+const loginUserControl = async(req,res) => {
+  const {email, password} = req.body;
+
+  const findUser = await User.findOne({ email });
+
+  if ( findUser && (await findUser.isPasswordMatched(password))) {
+    res.json(findUser);
+  } else {
+    res.status(401).json({ message: 'Invalid credentials' });
+  }
+};
+
+module.exports = { createUser, loginUserControl };
