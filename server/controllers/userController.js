@@ -38,4 +38,44 @@ const loginUserControl = async(req,res) => {
   }
 };
 
-module.exports = { createUser, loginUserControl };
+// Get all users
+
+const getAllUsers = async(req, res) => {
+  try {
+    const getUsers = await User.find();
+    res.json(getUsers);
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getUser = async(req, res) => {
+ console.log(req.params);
+  const {id} = req.params;
+  try {
+    const getUser = await User.findById(id);
+    res.json({
+      getUser,
+    })
+    
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const deleteUser = async(req, res) => {
+  console.log(req.params);
+   const {id} = req.params;
+   try {
+     const deleteUser = await User.findByIdAndDelete(id);
+     res.json({
+      deleteUser,
+     })
+     
+   } catch (error) {
+     throw new Error(error)
+   }
+ }
+
+ 
+module.exports = { createUser, loginUserControl, getAllUsers, getUser, deleteUser};
