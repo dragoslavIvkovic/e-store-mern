@@ -77,5 +77,25 @@ const deleteUser = async(req, res) => {
    }
  }
 
+ const updateUser = async(req, res) => {
+  console.log(req.params);
+   const {id} = req.params;
+   try {
+     const updateUser = await User.findByIdAndUpdate(id,{
+     firstName: req?.body?.firstName,
+     lastName:req?.body?.lastName,
+     email:req?.body?.email,
+     mobile:req?.body?.mobile,
+     },{
+      new: true,
+     });
+     res.json(updateUser )
+     
+   } catch (error) {
+     throw new Error(error)
+   }
+ }
+
+
  
-module.exports = { createUser, loginUserControl, getAllUsers, getUser, deleteUser};
+module.exports = { createUser, loginUserControl, getAllUsers, getUser, deleteUser, updateUser};
